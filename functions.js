@@ -10,8 +10,9 @@ const books = require("./books.json");
  ****************************************************************/
 function getBookById(bookId, books) {
   // Your code goes here
+  return books.find((e) => e.id == bookId);
 }
-// console.log(getBookById(12, books));
+console.log(getBookById(12, books));
 
 /**************************************************************
  * getAuthorByName(authorName, authors):
