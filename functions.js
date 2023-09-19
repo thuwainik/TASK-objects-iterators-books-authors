@@ -12,7 +12,7 @@ function getBookById(bookId, books) {
   // Your code goes here
   return books.find((e) => e.id == bookId);
 }
-console.log(getBookById(12, books));
+// console.log(getBookById(12, books));
 
 /**************************************************************
  * getAuthorByName(authorName, authors):
@@ -23,6 +23,7 @@ console.log(getBookById(12, books));
  ****************************************************************/
 function getAuthorByName(authorName, authors) {
   // Your code goes here
+  return authors.find((e) => e.name == authorName);
 }
 // console.log(getAuthorByName("J.K. Rowling", authors));
 
@@ -34,6 +35,14 @@ function getAuthorByName(authorName, authors) {
  ****************************************************************/
 function bookCountsByAuthor(authors) {
   // Your code goes here
+  let auth = [];
+  authors.forEach((e) => {
+    let obj = {};
+    obj.author = e.name;
+    obj.bookCount = e.books.length;
+    auth.push(obj);
+  });
+  return auth;
 }
 // console.log(bookCountsByAuthor(authors));
 
@@ -45,9 +54,24 @@ function bookCountsByAuthor(authors) {
  *    { <COLOR>: [<BOOK_TITLES>] }
  ****************************************************************/
 function booksByColor(books) {
-  const colors = {};
-
   // Your code goes here
+  const colors = {};
+  let coloArr = [];
+
+  books.forEach((e) => {
+    if (!coloArr.includes(e.color)) {
+      coloArr.push(e.color);
+
+      let x = [];
+      books.forEach((j) => {
+        if (j.color == e.color) {
+          x.push(j.title);
+        }
+      });
+
+      colors[e.color] = x;
+    }
+  });
 
   return colors;
 }
@@ -63,6 +87,19 @@ function booksByColor(books) {
  ****************************************************************/
 function titlesByAuthorName(authorName, authors, books) {
   // Your code goes here
+  // let x = [];
+  // authors.forEach((e) => {
+  //   if (e.name == authorName) {
+  //     books.forEach((j) => {
+  //       if (e.books.includes(j.id)) {
+  //         x.push(j.title);
+  //       }
+  //     });
+  //   }
+  // });
+  // return x;
+  const x = getAuthorByName(authorName, authors);
+  return x.books.map((e) => getBookById(e, books).title);
 }
 // console.log(titlesByAuthorName("George R.R. Martin", authors, books));
 
@@ -75,6 +112,8 @@ function titlesByAuthorName(authorName, authors, books) {
  ****************************************************************/
 function mostProlificAuthor(authors) {
   // Your code goes here
+  const arr = authors.sort((a, b) => a.books.length - b.books.length);
+  return arr[arr.length - 1].name;
 }
 // console.log(mostProlificAuthor(authors));
 
