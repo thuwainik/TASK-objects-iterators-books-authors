@@ -146,11 +146,11 @@ function relatedBooks(bookId, authors, books) {
   getBookById(bookId, books).authors.forEach((e) => {
     x.push(e.id);
   });
-  let y = x.forEach((i) => {
+  x.forEach((i) => {
     authors
       .filter((j) => i.id == j.id)
       .forEach((k) => {
-        return;
+        return k.books;
       });
   });
   return y;
