@@ -146,16 +146,23 @@ function relatedBooks(bookId, authors, books) {
   getBookById(bookId, books).authors.forEach((e) => {
     x.push(e.id);
   });
-  x.forEach((i) => {
-    authors
-      .filter((j) => i.id == j.id)
-      .forEach((k) => {
-        return k.books;
-      });
-  });
-  return y;
+
+  let y = [];
+  authors
+    .filter((e) => x.includes(e.id))
+    .forEach((e) => {
+      y.push(...e.books);
+    });
+  let z = [];
+  books
+    .filter((e) => y.includes(e.id))
+    .forEach((e) => {
+      z.push(e.title);
+    });
+
+  return z;
 }
-console.log(relatedBooks(54, authors, books));
+// console.log(relatedBooks(46, authors, books));
 
 /**************************************************************
  * friendliestAuthor(authors):
