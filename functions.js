@@ -142,8 +142,20 @@ function mostProlificAuthor(authors) {
  ****************************************************************/
 function relatedBooks(bookId, authors, books) {
   // Your code goes here
+  let x = [];
+  getBookById(bookId, books).authors.forEach((e) => {
+    x.push(e.id);
+  });
+  let y = x.forEach((i) => {
+    authors
+      .filter((j) => i.id == j.id)
+      .forEach((k) => {
+        return;
+      });
+  });
+  return y;
 }
-// console.log(relatedBooks(50, authors, books));
+console.log(relatedBooks(54, authors, books));
 
 /**************************************************************
  * friendliestAuthor(authors):
