@@ -172,8 +172,11 @@ function relatedBooks(bookId, authors, books) {
  ****************************************************************/
 function friendliestAuthor(authors) {
   // Your code goes here
+  const booksArr = authors.map((e) => e.books);
+  // const newArr = booksArr.reduce((x, y) => x.filter((z) => y.includes(z)));
+  return booksArr;
 }
-// console.log(friendliestAuthor(authors));
+console.log(friendliestAuthor(authors));
 
 module.exports = {
   getBookById,
