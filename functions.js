@@ -171,14 +171,28 @@ function relatedBooks(bookId, authors, books) {
  *   co-authored the greatest number of books
  ****************************************************************/
 function friendliestAuthor(authors) {
-  const coAuth = [];
-  books
-    .filter((e) => e.authors.length > 1)
-    .forEach((e) => coAuth.push(...e.authors));
-  coAuth.sort((a, b) => a.id - b.id);
+  // const coAuth2 = books
+  // .filter((e) => e.authors.length > 1)
+  // .map((e) => e.authors)
+  // .flat();
+
+  // const coAuth = [];
+  // books
+  //   .filter((e) => e.authors.length > 1)
+  //   .forEach((e) => coAuth.push(...e.authors));
+  let dBooks = [];
+  authors.map((e) => e.books).forEach((e) => dBooks.push(...e));
+  dBooks = dBooks.filter((e) => dBooks.includes(e, dBooks.indexOf(e) + 1));
+  dBooks = dBooks.filter((item, index) => dBooks.indexOf(item) === index);
+  let coBooks = [];
+  dBooks.forEach((e) =>
+    coBooks.push(...authors.filter((x) => x.books.includes(e)))
+  );
+
+  coBooks.sort((a, b) => a.id - b.id);
   let count = {};
   let temp = [];
-  coAuth.forEach((e) => {
+  coBooks.forEach((e) => {
     if (count[e.name]) {
       count[e.name] += 1;
     } else {
@@ -190,9 +204,21 @@ function friendliestAuthor(authors) {
   for (let i = 0; i < temp.length; i++) {
     temp[i].count = Object.values(count)[i];
   }
-  temp.sort((a, b) => a.count - b.count);
-  return temp[temp.length - 1].name;
+  temp.sort((a, b) => b.count - a.count);
+  return temp[0].name;
+  // let temp_ = { count: 0 };
+  // for (key in count) {
+  //   if (temp_.count > count[key]) {
+  //     temp_ = temp_;
+  //   } else {
+  //     temp_ = { count: count[key], name: key };
+  //   }
+  // }
+  // return temp_.name;
+  //   console.log(friendliestAuthor(authors));
+  // };
 }
+
 console.log(friendliestAuthor(authors));
 
 module.exports = {
